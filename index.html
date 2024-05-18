@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Citations</h1>
+        <div id="citations"></div>
+    </div>
+    <script>
+        fetch('/api/citations')
+            .then(response => response.json())
+            .then(data => {
+                const citationsDiv = document.getElementById('citations');
+                data.forEach(item => {
+                    const responseText = document.createElement('p');
+                    responseText.textContent = `Response: ${item.response}`;
+                    citationsDiv.appendChild(responseText);
+                    const citationsList = document.createElement('ul');
+                    item.citations.forEach(citation => {
+                        const citationItem = document.createElement('li');
+                        citationItem.textContent = `ID: ${citation.id}, Link: ${citation.link}`;
+                        citationsList.appendChild(citationItem);
+                    });
+                    citationsDiv.appendChild(citationsList);
+                });
+            });
+    </script>
+</body>
+</html>
